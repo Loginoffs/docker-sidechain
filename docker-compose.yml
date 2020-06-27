@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  first-node:
+    &first
+    container_name: first-node
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - "./Settings/settings.json:/home/erachain/settings.json"
+      - "./Settings/peers-side.json:/home/erachain/peers-side.json"
+      - "./Settings/sideGENESIS.json:/home/erachain/sideGENESIS.json"
+      - "./Settings/sidePROTOCOL.json:/home/erachain/sidePROTOCOL.json"
+    environment:
+      - ACCOUNTS_COUNT=${ACCOUNTS_COUNT_FIRST}
+      - SEED=${SEED_FIRST}
+      - PASSWORD=${PASSWORD_FIRST}
+    ports:
+      - "9057:9057"
+    command: ["sh", "-c", "java -jar /home/erachain/erachain.jar -pass=$${PASSWORD} -seed=$${ACCOUNTS_COUNT}:$${SEED}:$${PASSWORD} -nogui"]
+  second-node:
+    <<: *first
+    container_name: second-node
+    environment:
+      - ACCOUNTS_COUNT=${ACCOUNTS_COUNT_SECOND}
+      - SEED=${SEED_SECOND}
+      - PASSWORD=${PASSWORD_SECOND}
+    ports:
+      - "9077:9057"

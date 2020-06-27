@@ -1,0 +1,11 @@
+{
+  "blockPeriod": 60,
+  "startKey": {
+    "assets": 1,
+    "persons": 1,
+    "polls": 1,
+    "statuses": 1
+  },
+  "referalsOn": true,
+  "allValidBefore": 0
+}
