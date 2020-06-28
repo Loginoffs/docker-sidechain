@@ -11,11 +11,11 @@ JQx32 = 'http://stedolan.github.io/jq/download/linux32/jq'
 
 install:
 	wget -c https://erachain.org/assets/ERA/Erachain.tar.gz -O - | tar -xz
-	if [ '$(ARCH)' = 'x86_64' ]; then wget $(JQx64); else wget $(JQx32); fi
-	chmod +x ./jq
-	sudo cp jq /usr/bin
+	@if [ '$(ARCH)' = 'x86_64' ]; then wget $(JQx64); else wget $(JQx32); fi
+	@chmod +x ./jq
+	@sudo cp jq /usr/bin
 	@rm jq
-	if [ '${NAME}' = '' ]; then echo "\e[32mВведите название вашего блокчейна:\e[0m"; \
+	@if [ '${NAME}' = '' ]; then echo "\e[32mВведите название вашего блокчейна:\e[0m"; \
 	read BLOCKCHAIN_NAME; sed -ir "s/NAME=.*/NAME=$${BLOCKCHAIN_NAME}/" .env; \
 	else BLOCKCHAIN_NAME=${NAME}; fi; \
 	wget -O first_genesis.json "https://side.erachain.org/api/get-genesis?seed=${SEED_FIRST}&name=$${BLOCKCHAIN_NAME}"
